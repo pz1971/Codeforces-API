@@ -5,6 +5,8 @@
  */
 package codeforces.api.java;
 
+import org.json.JSONObject;
+
 /**
  *
  * @author Parvez
@@ -24,14 +26,36 @@ enum testsetType{
 }
 
 public class CFSubmission {
-    private int id, creationTimeSeconds, relativeTimeSeconds ;
+    private int id ;
+    private long creationTimeSeconds, relativeTimeSeconds ;
     private CFProblem problem ;
     private String programmingLanguage ;
     private verdictType verdict ;
     private testsetType testset ;
     private int passedTestCount, timeConsumedMillis, memoryConsumedBytes ;
     
-    public CFSubmission(){
-        
+    public CFSubmission(JSONObject ob){
+        id = ob.getInt("id");
+        creationTimeSeconds = ob.getLong("creationTimeSeconds") ;
+        relativeTimeSeconds = ob.getLong("relativeTimeSeconds") ;
+        problem = new CFProblem(ob.getJSONObject("problem")) ;
+        programmingLanguage = ob.getString("programmingLanguage");
+        verdict = ob.getEnum(verdictType.class, "verdict");
+        testset = ob.getEnum(testsetType.class, "testset");
+        passedTestCount = ob.getInt("passedTestCount");
+        timeConsumedMillis = ob.getInt("timeConsumedMillis");
+        memoryConsumedBytes = ob.getInt("memoryConsumedBytes");
+    }
+    
+    @Override
+    public String toString(){
+        String ret = "ID : " + id ;
+        ret += "\nSubmission Time : " + creationTimeSeconds ;
+        ret += "\nlang : " + programmingLanguage ;
+        ret += "\nverdict : " + verdict.toString() ;
+        ret += "\nmax time : " + timeConsumedMillis + "ms" ;
+        ret += "\nmax memory : " + memoryConsumedBytes + "B" ;
+        ret += "\nProblem info :\n" + problem.toString() ;
+        return ret ;
     }
 }

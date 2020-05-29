@@ -26,10 +26,10 @@ public class CodeforcesAPIJava {
 //            e.printStackTrace();
 //        }
 
-        String str = "{\"contestId\":1360,\"index\":\"H\",\"name\":\"Binary Median\",\"type\":\"PROGRAMMING\",\"rating\":2100,\"tags\":[\"bitmasks\",\"brute force\",\"constructive algorithms\"]}" ;
+        String str = "{\"id\":81331857,\"contestId\":1360,\"creationTimeSeconds\":1590352835,\"relativeTimeSeconds\":2147483647,\"problem\":{\"contestId\":1360,\"index\":\"H\",\"name\":\"Binary Median\",\"type\":\"PROGRAMMING\",\"rating\":2100,\"tags\":[\"bitmasks\",\"brute force\",\"constructive algorithms\"]},\"author\":{\"contestId\":1360,\"members\":[{\"handle\":\"pz1971\"}],\"participantType\":\"PRACTICE\",\"ghost\":false,\"startTimeSeconds\":1590327300},\"programmingLanguage\":\"GNU C++17\",\"verdict\":\"OK\",\"testset\":\"TESTS\",\"passedTestCount\":5,\"timeConsumedMillis\":15,\"memoryConsumedBytes\":102400}" ;
         JSONObject ob = new JSONObject(str) ;
-        CFProblem prb = new CFProblem(ob) ;
-        System.out.println(prb.toString());
+        CFSubmission sub = new CFSubmission(ob) ;
+        System.out.println(sub.toString());
     }
     
 }
