@@ -6,14 +6,9 @@
 package codeforces.api.java;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.util.Pair;
 
 /**
  *
@@ -30,9 +25,8 @@ public class Codeforces {
         
     }
     
-    Pair<Boolean, String> get(String request){
+    String get(String request) throws Exception{
         content = new StringBuffer() ;
-        Boolean ret = false ;
         try {
             URL url = new URL(cf_api + request) ;
             connection = (HttpURLConnection)url.openConnection();
@@ -46,16 +40,10 @@ public class Codeforces {
             
             if(status >= 300){
                 // something went wrong
-                reader = new BufferedReader(new InputStreamReader(connection.getErrorStream())) ;
-                while((line = reader.readLine()) != null){
-                    content.append(line) ;
-                }
-                reader.close() ;
+                throw new Exception() ;
             }
             else {
                 // successful connection
-                ret = true ;
-                
                 reader = new BufferedReader(new InputStreamReader(connection.getInputStream())) ;
                 while((line = reader.readLine()) != null){
                     content.append(line) ;
@@ -63,12 +51,10 @@ public class Codeforces {
                 reader.close() ;
             }
             
-        } catch (MalformedURLException ex) {
-            Logger.getLogger(Codeforces.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(Codeforces.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception e) {
+            throw e ;
         }
         
-        return new Pair<Boolean, String>(ret, content.toString()) ;
+        return content.toString() ;
     }
 }

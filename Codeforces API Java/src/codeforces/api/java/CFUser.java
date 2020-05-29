@@ -5,7 +5,6 @@
  */
 package codeforces.api.java;
 
-import javafx.util.Pair;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -14,27 +13,30 @@ import org.json.JSONObject;
  * @author Parvez
  */
 public class CFUser {
-    private boolean done ;
     private String handle, firstName, lastName, rank, maxRank ;
     private int rating, maxRating ;
     private int contribution, friendOfCount ;
     private String country, city, organization ;
     private String titlePhoto, avatar ;
     
-    public CFUser(String handle){
-        done = false ;
+    public CFUser(String handle) throws InitializationFailedException{
         Codeforces cf = new Codeforces() ;
         
-        Pair<Boolean, String> content = cf.get("user.info?handles=" + handle) ;
-        if(content.getKey() == false)   // something went wrong
-            return ;
+        String content ;
+        try{
+            content = cf.get("user.info?handles=" + handle) ;
+        }catch(Exception e){
+            throw new InitializationFailedException() ;
+        }
         
-        JSONObject ob = new JSONObject(content.getValue()) ;
+        
+        JSONObject ob = new JSONObject(content) ;
         String stat = ob.getString("status");
-        if(!stat.equals("OK"))  // something went wrong
-            return ;
         
-        done = true ;
+        if(!stat.equals("OK")){  // something went wrong
+            throw new InitializationFailedException() ;
+        }
+        
         JSONArray ar = ob.getJSONArray("result");
         ob = ar.getJSONObject(0) ;
         
@@ -91,9 +93,6 @@ public class CFUser {
         ret += "\nAvatar : " + avatar ;
         
         return ret;
-    }
-    public boolean isOk(){
-        return done ;
     }
     
     public String getHandle() {
