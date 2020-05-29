@@ -18,13 +18,13 @@ public class CFUser {
     private int contribution, friendOfCount ;
     private String country, city, organization ;
     private String titlePhoto, avatar ;
+    private CFSubmission submissions[] ;
+    private int submissionCount, passedCount, failedCount ;
     
     public CFUser(String handle) throws InitializationFailedException{
-        Codeforces cf = new Codeforces() ;
-        
         String content ;
         try{
-            content = cf.get("user.info?handles=" + handle) ;
+            content = new Codeforces().get("user.info?handles=" + handle) ;
         }catch(Exception e){
             throw new InitializationFailedException() ;
         }
@@ -72,6 +72,33 @@ public class CFUser {
             titlePhoto = ob.getString("titlePhoto") ;
         if(ob.has("avatar"))
             avatar = ob.getString("avatar") ;
+        
+        try{
+            content = new Codeforces().get("user.status?handle=" + handle) ;
+            ob = new JSONObject(content) ;
+            stat = ob.getString("status");
+        
+            if(!stat.equals("OK")){  // something went wrong
+                throw new InitializationFailedException() ;
+            }
+            
+            ar = ob.getJSONArray("result");
+            submissionCount = ar.length() ;
+            passedCount = 0;
+            failedCount = 0 ;
+            submissions = new CFSubmission[ar.length()] ;
+            
+            for(int i = 0 ; i < ar.length() ; i++){
+                submissions[i] = new CFSubmission( ar.getJSONObject(i) ) ;
+                if(submissions[i].getVerdict() == verdictType.OK)
+                    passedCount++ ;
+                else
+                    failedCount++ ;
+            }
+            
+        }catch (Exception e){
+            throw new InitializationFailedException() ;
+        }
     }
     
     @Override
@@ -149,5 +176,21 @@ public class CFUser {
 
     public String getAvatar() {
         return avatar;
+    }
+
+    public CFSubmission[] getSubmissions() {
+        return submissions;
+    }
+
+    public int getSubmissionCount() {
+        return submissionCount;
+    }
+
+    public int getPassedCount() {
+        return passedCount;
+    }
+
+    public int getFailedCount() {
+        return failedCount;
     }
 }

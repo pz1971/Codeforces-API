@@ -44,4 +44,24 @@ public class CFProblem {
         ret += "\ntags :" + Arrays.toString(tags);
         return ret ;
     }
+
+    public int getContestId() {
+        return contestId;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public String getIndex() {
+        return index;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String[] getTags() {
+        return tags;
+    }
 }

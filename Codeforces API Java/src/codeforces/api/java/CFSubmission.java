@@ -58,4 +58,44 @@ public class CFSubmission {
         ret += "\nProblem info :\n" + problem.toString() ;
         return ret ;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public long getCreationTimeSeconds() {
+        return creationTimeSeconds;
+    }
+
+    public long getRelativeTimeSeconds() {
+        return relativeTimeSeconds;
+    }
+
+    public CFProblem getProblem() {
+        return problem;
+    }
+
+    public String getProgrammingLanguage() {
+        return programmingLanguage;
+    }
+
+    public verdictType getVerdict() {
+        return verdict;
+    }
+
+    public testsetType getTestset() {
+        return testset;
+    }
+
+    public int getPassedTestCount() {
+        return passedTestCount;
+    }
+
+    public int getTimeConsumedMillis() {
+        return timeConsumedMillis;
+    }
+
+    public int getMemoryConsumedBytes() {
+        return memoryConsumedBytes;
+    }
 }
