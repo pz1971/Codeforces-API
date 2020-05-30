@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package codeforces.api.java;
+package CodeforcesAPI;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -20,24 +20,30 @@ public class CFUser {
     private String titlePhoto, avatar ;
     private CFSubmission submissions[] ;
     private int submissionCount, passedCount, failedCount ;
+    private boolean submissionsLoaded ;
     
-    public CFUser(String handle) throws InitializationFailedException{
+    public CFUser(String handle) throws InitializationFailedException{  // the constructor
+        submissionsLoaded = false ; // initially submissions of a user is not loaded.
+        
         String content ;
         try{
-            content = new Codeforces().get("user.info?handles=" + handle) ;
+            content = new Codeforces().get("user.info?handles=" + handle) ;// receiving content
         }catch(Exception e){
             throw new InitializationFailedException() ;
         }
         
-        
+        // converting the content data into JSONObject
         JSONObject ob = new JSONObject(content) ;
+        // The status of request... OK if successful.
         String stat = ob.getString("status");
-        
         if(!stat.equals("OK")){  // something went wrong
             throw new InitializationFailedException() ;
         }
         
+        // initialization of JSONArray
         JSONArray ar = ob.getJSONArray("result");
+        // The 0th index of the array contains the Data of first user.
+        // We are only interested in retrieving data of a single user.
         ob = ar.getJSONObject(0) ;
         
         if(ob.has("handle"))
@@ -72,33 +78,6 @@ public class CFUser {
             titlePhoto = ob.getString("titlePhoto") ;
         if(ob.has("avatar"))
             avatar = ob.getString("avatar") ;
-        
-        try{
-            content = new Codeforces().get("user.status?handle=" + handle) ;
-            ob = new JSONObject(content) ;
-            stat = ob.getString("status");
-        
-            if(!stat.equals("OK")){  // something went wrong
-                throw new InitializationFailedException() ;
-            }
-            
-            ar = ob.getJSONArray("result");
-            submissionCount = ar.length() ;
-            passedCount = 0;
-            failedCount = 0 ;
-            submissions = new CFSubmission[ar.length()] ;
-            
-            for(int i = 0 ; i < ar.length() ; i++){
-                submissions[i] = new CFSubmission( ar.getJSONObject(i) ) ;
-                if(submissions[i].getVerdict() == verdictType.OK)
-                    passedCount++ ;
-                else
-                    failedCount++ ;
-            }
-            
-        }catch (Exception e){
-            throw new InitializationFailedException() ;
-        }
     }
     
     @Override
@@ -121,6 +100,50 @@ public class CFUser {
         
         return ret;
     }
+    
+    //
+    // member methods
+    //
+    
+    public boolean areSubmissionsLoaded(){ // returns if the subbmissions are loaded or not
+        return submissionsLoaded ;
+    }
+    
+    public void loadSubmissions() throws InitializationFailedException {    // loads all the submissions of a user
+        try{
+            String content = new Codeforces().get("user.status?handle=" + handle) ;
+            JSONObject ob = new JSONObject(content) ;
+            String stat = ob.getString("status");
+        
+            if(!stat.equals("OK")){  // something went wrong
+                throw new InitializationFailedException() ;
+            }
+            // submission array in JSON format
+            JSONArray ar = ob.getJSONArray("result");
+            submissionCount = ar.length() ;
+            passedCount = 0;
+            failedCount = 0 ;
+            submissions = new CFSubmission[ar.length()] ;
+            
+            // converting JSON objects into CFProblem objects
+            for(int i = 0 ; i < ar.length() ; i++){
+                submissions[i] = new CFSubmission( ar.getJSONObject(i) ) ;
+                if(submissions[i].getVerdict() == verdictType.OK)
+                    passedCount++ ;
+                else
+                    failedCount++ ;
+            }
+            
+        }catch (Exception e){   // if failed
+            throw new InitializationFailedException() ;
+        }finally{   // now submissions are loaded
+            submissionsLoaded = true ;
+        }
+    }
+    
+    //
+    // Getter Methods
+    //
     
     public String getHandle() {
         return handle;

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package codeforces.api.java;
+package CodeforcesAPI;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -16,16 +16,16 @@ import java.net.URL;
  */
 public class Codeforces {
     private static HttpURLConnection connection ;
-    private static final String cf_api = "https://codeforces.com/api/";
+    private static final String cf_api = "https://codeforces.com/api/"; // common part of the URL
     private static StringBuffer content  ;
     private static BufferedReader reader ;
     private static String line ;
     
-    public Codeforces() {
+    public Codeforces() { // constructor
         
     }
     
-    String get(String request) throws Exception{
+    public String get(String request) throws Exception{    // method to send HTTP Request
         content = new StringBuffer() ;
         try {
             URL url = new URL(cf_api + request) ;
@@ -44,6 +44,7 @@ public class Codeforces {
             }
             else {
                 // successful connection
+                // receiving the JSON data
                 reader = new BufferedReader(new InputStreamReader(connection.getInputStream())) ;
                 while((line = reader.readLine()) != null){
                     content.append(line) ;
@@ -52,6 +53,7 @@ public class Codeforces {
             }
             
         } catch (Exception e) {
+            // if anything goes wrong
             throw e ;
         }
         

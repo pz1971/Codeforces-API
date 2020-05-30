@@ -4,9 +4,7 @@
  * and open the template in the editor.
  */
 package codeforces.api.java;
-
-import org.json.JSONObject;
-
+import CodeforcesAPI.* ;
 /**
  *
  * @author Parvez
@@ -22,7 +20,12 @@ public class CodeforcesAPIJava {
         try{
             pz = new CFUser("pz1971") ;   
             System.out.println(pz.toString());
+            System.out.println(pz.areSubmissionsLoaded());
+            pz.loadSubmissions();
+            System.out.println(pz.areSubmissionsLoaded());
             System.out.println(pz.getSubmissionCount());
+            System.out.println(pz.getPassedCount());
+            System.out.println(pz.getFailedCount());
         }catch(InitializationFailedException e){
             e.printStackTrace();
         }
