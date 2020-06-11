@@ -5,6 +5,8 @@
  */
 package CodeforcesAPI;
 
+import CodeforcesAPI.CFSubmission.verdictType;
+import CodeforcesAPI.CFSubmission.testsetType;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -45,6 +47,43 @@ public class CFUser {
         // The 0th index of the array contains the Data of first user.
         // We are only interested in retrieving data of a single user.
         ob = ar.getJSONObject(0) ;
+        
+        if(ob.has("handle"))
+            this.handle = ob.getString("handle") ;
+        if(ob.has("firstName"))
+            firstName = ob.getString("firstName") ;
+        if(ob.has("lastName"))
+            lastName = ob.getString("lastName") ;
+        if(ob.has("rank"))
+            rank = ob.getString("rank") ;
+        if(ob.has("maxRank"))
+            maxRank = ob.getString("maxRank") ;
+        
+        if(ob.has("rating"))
+            rating = ob.getInt("rating") ;
+        if(ob.has("maxRating"))
+            maxRating = ob.getInt("maxRating") ;
+        
+        if(ob.has("contribution"))
+            contribution = ob.getInt("contribution") ;
+        if(ob.has("friendOfCount"))
+            friendOfCount = ob.getInt("friendOfCount") ;
+        
+        if(ob.has("country"))
+            country = ob.getString("country") ;
+        if(ob.has("city"))
+            city = ob.getString("city") ;
+        if(ob.has("organization"))
+            organization = ob.getString("organization") ;
+        
+        if(ob.has("titlePhoto"))
+            titlePhoto = ob.getString("titlePhoto") ;
+        if(ob.has("avatar"))
+            avatar = ob.getString("avatar") ;
+    }
+    
+    public CFUser(JSONObject ob){  // another constructor
+        submissionsLoaded = false ; // initially submissions of a user is not loaded.
         
         if(ob.has("handle"))
             this.handle = ob.getString("handle") ;

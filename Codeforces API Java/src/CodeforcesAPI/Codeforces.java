@@ -9,6 +9,8 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  *
@@ -58,5 +60,23 @@ public class Codeforces {
         }
         
         return content.toString() ;
+    }
+    
+    public CFContest[] getContestList() throws Exception{
+        String str = this.get("contest.list?gym=false") ;
+        JSONObject ob = new JSONObject(str) ;
+        
+        if(!(ob.getString("status")).equals("OK"))
+            throw new Exception() ;
+        
+        JSONArray ar = ob.getJSONArray("result") ;
+        
+        CFContest ret[] = new CFContest[ar.length()] ;
+        
+        for(int i = 0 ; i < ar.length() ; i++){
+            ret[i] = new CFContest(ar.getJSONObject(i)) ;
+        }
+        
+        return ret ;
     }
 }
