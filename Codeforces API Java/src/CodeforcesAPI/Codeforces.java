@@ -62,6 +62,7 @@ public class Codeforces {
         return content.toString() ;
     }
     
+    // returns the list of contests held so far || gym = false
     public CFContest[] getContestList() throws Exception{
         String str = this.get("contest.list?gym=false") ;
         JSONObject ob = new JSONObject(str) ;
@@ -78,5 +79,14 @@ public class Codeforces {
         }
         
         return ret ;
+    }
+    // returns the reference to a CFContest object 
+    public CFContest findContestById(CFContest[] contestList, int id) throws Exception{
+        // cant' use binary search. contestList may not be sorted according to contestId
+        for (int i = 0 ; i < contestList.length ; i++){
+            if(contestList[i].getId()==id)
+                return contestList[i];
+        }
+        throw new Exception();
     }
 }
