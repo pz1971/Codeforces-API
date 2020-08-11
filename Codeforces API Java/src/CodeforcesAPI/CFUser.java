@@ -21,11 +21,14 @@ public class CFUser {
     private String country, city, organization ;
     private String titlePhoto, avatar ;
     private CFSubmission submissions[] ;
+    private CFRatingChange ratingChanges[];
     private int submissionCount, passedCount, failedCount ;
-    private boolean submissionsLoaded ;
+    private int participationCount ;
+    private boolean submissionsLoaded, ratingChangesLoaded ;
     
     public CFUser(String handle) throws InitializationFailedException{  // the constructor
         submissionsLoaded = false ; // initially submissions of a user is not loaded.
+        ratingChangesLoaded = false; // initially rating changes of a user is not loaded.
         
         String content ;
         try{
@@ -84,6 +87,7 @@ public class CFUser {
     
     public CFUser(JSONObject ob){  // another constructor
         submissionsLoaded = false ; // initially submissions of a user is not loaded.
+        ratingChangesLoaded = false; // initially rating changes of a user is not loaded.
         
         if(ob.has("handle"))
             this.handle = ob.getString("handle") ;
@@ -148,6 +152,10 @@ public class CFUser {
         return submissionsLoaded ;
     }
     
+    public boolean areRatingChangesLoaded(){ // returns if the rating changes are loaded or not
+        return ratingChangesLoaded ;
+    }
+    
     public void loadSubmissions() throws InitializationFailedException {    // loads all the submissions of a user
         try{
             String content = new Codeforces().get("user.status?handle=" + handle) ;
@@ -157,14 +165,14 @@ public class CFUser {
             if(!stat.equals("OK")){  // something went wrong
                 throw new InitializationFailedException() ;
             }
-            // submission array in JSON format
+            // CFSubmission array in JSON format
             JSONArray ar = ob.getJSONArray("result");
             submissionCount = ar.length() ;
             passedCount = 0;
             failedCount = 0 ;
             submissions = new CFSubmission[ar.length()] ;
             
-            // converting JSON objects into CFProblem objects
+            // converting JSON objects into CFSubmission objects
             for(int i = 0 ; i < ar.length() ; i++){
                 submissions[i] = new CFSubmission( ar.getJSONObject(i) ) ;
                 if(submissions[i].getVerdict() == verdictType.OK)
@@ -173,10 +181,35 @@ public class CFUser {
                     failedCount++ ;
             }
             
+            submissionsLoaded = true ;
         }catch (Exception e){   // if failed
             throw new InitializationFailedException() ;
-        }finally{   // now submissions are loaded
-            submissionsLoaded = true ;
+        }
+    }
+    
+    public void loadRatingChanges() throws InitializationFailedException{
+        try{
+            String content = new Codeforces().get("user.rating?handle=" + handle) ;
+            JSONObject ob = new JSONObject(content) ;
+            String stat = ob.getString("status");
+        
+            if(!stat.equals("OK")){  // something went wrong
+                throw new InitializationFailedException() ;
+            }
+            
+            // CFRatingChange array in JSON format
+            JSONArray ar = ob.getJSONArray("result");
+            participationCount = ar.length();
+            ratingChanges = new CFRatingChange[ar.length()] ;
+            
+            // converting JSON objects into CFRatingChange objects
+            for(int i = 0 ; i < ar.length() ; i++){
+                ratingChanges[i] = new CFRatingChange( ar.getJSONObject(i) ) ;
+            }
+            
+            ratingChangesLoaded = true ;
+        }catch (Exception e){
+            throw new InitializationFailedException();
         }
     }
     
@@ -254,5 +287,13 @@ public class CFUser {
 
     public int getFailedCount() {
         return failedCount;
+    }
+
+    public CFRatingChange[] getRatingChanges() {
+        return ratingChanges;
+    }
+
+    public int getParticipationCount() {
+        return participationCount;
     }
 }
