@@ -36,13 +36,14 @@ public class CodeforcesAPIJava {
 //        }catch(InitializationFailedException e){
 //            e.printStackTrace();
 //        }
-        try{
-            Codeforces cf = new Codeforces();
-            Pair<CFProblem[], CFProblemStatistics[]> p =  cf.getProblemSet();
-            System.out.println(p.getKey().length);
-        }catch(InitializationFailedException e){
-            e.printStackTrace();
-        }
+
+//        try{
+//            Codeforces cf = new Codeforces();
+//            Pair<CFProblem[], CFProblemStatistics[]> p =  cf.getProblemSet();
+//            System.out.println(p.getKey().length);
+//        }catch(InitializationFailedException e){
+//            e.printStackTrace();
+//        }
 
 //        try{
 //            Codeforces cf = new Codeforces() ;

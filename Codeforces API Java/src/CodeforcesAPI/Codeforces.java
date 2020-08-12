@@ -93,7 +93,7 @@ public class Codeforces {
     
     public Pair<CFProblem[], CFProblemStatistics[]> getProblemSet(String tags[] ) throws Exception{
         String query = "" ;
-        if (tags.length > 0)
+        if (tags.length > 0) // tags[] are not empty
             query += tags[0] ;
         for (int i = 1 ; i < tags.length ; i++){
             query += ';' + tags[i] ;

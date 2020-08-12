@@ -54,7 +54,7 @@ public class CFProblem {
     }
 
     public String getIndex() {
-        return index;
+        return index;// A, B, C1, E2
     }
 
     public String getName() {

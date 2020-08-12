@@ -65,7 +65,7 @@ public class CFRatingChange {
         return rank;
     }
 
-    public long getRatingUpdateTimeSeconds() {
+    public long getRatingUpdateTimeSeconds() { // UNIX format
         return ratingUpdateTimeSeconds;
     }
 

@@ -65,7 +65,7 @@ public class CFSubmission {
     }
 
     public long getCreationTimeSeconds() {
-        return creationTimeSeconds;
+        return creationTimeSeconds;//Unix format
     }
 
     public long getRelativeTimeSeconds() {
