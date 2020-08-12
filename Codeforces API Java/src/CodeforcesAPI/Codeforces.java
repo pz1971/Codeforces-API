@@ -9,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import javafx.util.Pair;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -81,12 +82,47 @@ public class Codeforces {
         return ret ;
     }
     // returns the reference to a CFContest object 
-    public CFContest findContestById(CFContest[] contestList, int id) throws Exception{
+    public int findContestById(CFContest[] contestList, int id){
         // cant' use binary search. contestList may not be sorted according to contestId
         for (int i = 0 ; i < contestList.length ; i++){
             if(contestList[i].getId()==id)
-                return contestList[i];
+                return i;
         }
-        throw new Exception();
+        return -1 ;
+    }
+    
+    public Pair<CFProblem[], CFProblemStatistics[]> getProblemSet(String tags[] ) throws Exception{
+        String query = "" ;
+        if (tags.length > 0)
+            query += tags[0] ;
+        for (int i = 1 ; i < tags.length ; i++){
+            query += ';' + tags[i] ;
+        }
+        
+        String str = this.get("problemset.problems?tags=" + query) ;
+        JSONObject ob = new JSONObject(str) ;
+        
+        if(!(ob.getString("status")).equals("OK"))
+            throw new Exception() ;
+        
+        ob = ob.getJSONObject("result");
+        JSONArray ar = ob.getJSONArray("problems") ;
+        JSONArray ar2 = ob.getJSONArray("problemStatistics") ;
+        
+        CFProblem[] ret1 = new CFProblem[ar.length()];
+        CFProblemStatistics[] ret2 = new CFProblemStatistics[ar.length()];
+        
+        for (int i = 0 ; i < ar.length(); i++){
+            ret1[i] = new CFProblem(ar.getJSONObject(i)) ;
+            ret2[i] = new CFProblemStatistics(ar2.getJSONObject(i)) ;
+        }
+        
+        return new Pair<> (ret1, ret2) ; // an array of CFProblems and an array of CFProblemStatistics
+    }
+    
+    public Pair<CFProblem[], CFProblemStatistics[]> getProblemSet() throws Exception{
+        String tags[] = new String[1] ;
+        tags[0] = "" ;
+        return getProblemSet(tags);
     }
 }

@@ -6,6 +6,7 @@
 package codeforces.api.java;
 import CodeforcesAPI.* ;
 import CodeforcesAPI.CFContest.contestPhase;
+import javafx.util.Pair;
 
 /**
  *
@@ -16,22 +17,29 @@ public class CodeforcesAPIJava {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         // TODO code application logic here
-        CFUser pz ; 
+//        CFUser pz ; 
+//        try{
+//            pz = new CFUser("pz1971") ;   
+//            System.out.println(pz.toString());
+////            System.out.println(pz.areSubmissionsLoaded());
+////            pz.loadSubmissions();
+////            System.out.println(pz.areSubmissionsLoaded());
+////            System.out.println(pz.getSubmissionCount());
+////            System.out.println(pz.getPassedCount());
+////            System.out.println(pz.getFailedCount());
+//            System.out.println(pz.areRatingChangesLoaded());
+//            pz.loadRatingChanges();
+//            System.out.println("participation = " + pz.getParticipationCount());
+//            System.out.println(pz.getRatingChanges()[1].toString());
+//        }catch(InitializationFailedException e){
+//            e.printStackTrace();
+//        }
         try{
-            pz = new CFUser("pz1971") ;   
-            System.out.println(pz.toString());
-//            System.out.println(pz.areSubmissionsLoaded());
-//            pz.loadSubmissions();
-//            System.out.println(pz.areSubmissionsLoaded());
-//            System.out.println(pz.getSubmissionCount());
-//            System.out.println(pz.getPassedCount());
-//            System.out.println(pz.getFailedCount());
-            System.out.println(pz.areRatingChangesLoaded());
-            pz.loadRatingChanges();
-            System.out.println("participation = " + pz.getParticipationCount());
-            System.out.println(pz.getRatingChanges()[1].toString());
+            Codeforces cf = new Codeforces();
+            Pair<CFProblem[], CFProblemStatistics[]> p =  cf.getProblemSet();
+            System.out.println(p.getKey().length);
         }catch(InitializationFailedException e){
             e.printStackTrace();
         }
