@@ -22,17 +22,22 @@ public class CFSubmission {
     private String testset ;
     private int passedTestCount, timeConsumedMillis, memoryConsumedBytes ;
     
-    public CFSubmission(JSONObject ob){ // constructor
-        id = ob.getInt("id");
-        creationTimeSeconds = ob.getLong("creationTimeSeconds") ;
-        relativeTimeSeconds = ob.getLong("relativeTimeSeconds") ;
-        problem = new CFProblem(ob.getJSONObject("problem")) ;
-        programmingLanguage = ob.getString("programmingLanguage");
-        verdict = ob.getString("verdict");
-        testset = ob.getString("testset");
-        passedTestCount = ob.getInt("passedTestCount");
-        timeConsumedMillis = ob.getInt("timeConsumedMillis");
-        memoryConsumedBytes = ob.getInt("memoryConsumedBytes");
+    public CFSubmission(JSONObject ob) throws InitializationFailedException{ // constructor
+        try{
+            id = ob.getInt("id");
+            creationTimeSeconds = ob.getLong("creationTimeSeconds") ;
+            relativeTimeSeconds = ob.getLong("relativeTimeSeconds") ;
+            problem = new CFProblem(ob.getJSONObject("problem")) ;
+            programmingLanguage = ob.getString("programmingLanguage");
+            verdict = ob.getString("verdict");
+            testset = ob.getString("testset");
+            passedTestCount = ob.getInt("passedTestCount");
+            timeConsumedMillis = ob.getInt("timeConsumedMillis");
+            memoryConsumedBytes = ob.getInt("memoryConsumedBytes");
+        }catch(Exception e){
+            throw new InitializationFailedException() ;
+        }
+        
     }
     
     @Override

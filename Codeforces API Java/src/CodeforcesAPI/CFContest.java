@@ -23,22 +23,27 @@ public class CFContest {
     private String phase ;
     
     // constructor
-    public CFContest(JSONObject ob){
-        id = ob.getInt("id");
-        name = ob.getString("name");
-        if(ob.has("durationdurationSeconds"))
-            durationdurationSeconds = ob.getLong("durationdurationSeconds");
-        if(ob.has("startTimeSeconds"))
-            startTimeSeconds = ob.getLong("startTimeSeconds");
-        if(ob.has("relativeTimeSeconds"))
-            relativeTimeSeconds = ob.getLong("relativeTimeSeconds");
-        if(ob.has("preparedBy"))
-            preparedBy = ob.getString("preparedBy") ;
-        if(ob.has("websiteUrl"))
-            preparedBy = ob.getString("websiteUrl") ;
-        
-        type = ob.getString( "type") ;
-        phase = ob.getString("phase") ;
+    public CFContest(JSONObject ob) throws InitializationFailedException{
+        try{
+            id = ob.getInt("id");
+            name = ob.getString("name");
+            if(ob.has("durationdurationSeconds"))
+                durationdurationSeconds = ob.getLong("durationdurationSeconds");
+            if(ob.has("startTimeSeconds"))
+                startTimeSeconds = ob.getLong("startTimeSeconds");
+            if(ob.has("relativeTimeSeconds"))
+                relativeTimeSeconds = ob.getLong("relativeTimeSeconds");
+            if(ob.has("preparedBy"))
+                preparedBy = ob.getString("preparedBy") ;
+            if(ob.has("websiteUrl"))
+                preparedBy = ob.getString("websiteUrl") ;
+
+            type = ob.getString( "type") ;
+            phase = ob.getString("phase") ;          
+            
+        }catch(Exception e){
+            throw new InitializationFailedException();
+        }
     }
 
     public int getId() {

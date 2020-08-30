@@ -18,21 +18,26 @@ public class CFRatingChange {
     private long ratingUpdateTimeSeconds; // in Unix format
     private int oldRating, newRating;
     
-    public CFRatingChange(JSONObject ob){
-        if(ob.has("contestId"))
-            this.contestId = ob.getInt("contestId");
-        if(ob.has("contestName"))
-            this.contestName = ob.getString("contestName") ;
-        if(ob.has("handle"))
-            this.handle = ob.getString("handle") ;
-        if(ob.has("rank"))
-            this.rank = ob.getInt("rank") ;
-        if(ob.has("ratingUpdateTimeSeconds"))
-            this.ratingUpdateTimeSeconds = ob.getLong("ratingUpdateTimeSeconds");
-        if(ob.has("oldRating"))
-            this.oldRating = ob.getInt("oldRating");
-        if(ob.has("newRating"))
-            this.newRating = ob.getInt("newRating");
+    public CFRatingChange(JSONObject ob) throws InitializationFailedException{
+        try{
+            if(ob.has("contestId"))
+                this.contestId = ob.getInt("contestId");
+            if(ob.has("contestName"))
+                this.contestName = ob.getString("contestName") ;
+            if(ob.has("handle"))
+                this.handle = ob.getString("handle") ;
+            if(ob.has("rank"))
+                this.rank = ob.getInt("rank") ;
+            if(ob.has("ratingUpdateTimeSeconds"))
+                this.ratingUpdateTimeSeconds = ob.getLong("ratingUpdateTimeSeconds");
+            if(ob.has("oldRating"))
+                this.oldRating = ob.getInt("oldRating");
+            if(ob.has("newRating"))
+                this.newRating = ob.getInt("newRating");    
+        }catch(Exception e){
+            throw new InitializationFailedException() ;
+        }
+        
     }
     
     // member methods

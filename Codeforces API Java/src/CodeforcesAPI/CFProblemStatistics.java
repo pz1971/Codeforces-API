@@ -17,13 +17,17 @@ public class CFProblemStatistics {
     private int solveCount;
     
     // constructor collects data from JSON object
-    public CFProblemStatistics(JSONObject ob){
-        if(ob.has("contestId"))
-            this.contestId = ob.getInt("contestId");
-        if(ob.has("index"))
-            this.index = ob.getString("index");
-        if(ob.has("solveCount"))
-            this.solveCount = ob.getInt("solveCount");
+    public CFProblemStatistics(JSONObject ob) throws InitializationFailedException{
+        try{
+            if(ob.has("contestId"))
+                this.contestId = ob.getInt("contestId");
+            if(ob.has("index"))
+                this.index = ob.getString("index");
+            if(ob.has("solveCount"))
+                this.solveCount = ob.getInt("solveCount");   
+        }catch(Exception e){
+            throw new InitializationFailedException() ;
+        }
     }
     
     @Override

@@ -31,94 +31,99 @@ public class CFUser {
         String content ;
         try{
             content = new Codeforces().get("user.info?handles=" + handle) ;// receiving content
+            // converting the content data into JSONObject
+            JSONObject ob = new JSONObject(content) ;
+            // The status of request... OK if successful.
+            String stat = ob.getString("status");
+            if(!stat.equals("OK")){  // something went wrong
+                throw new InitializationFailedException() ;
+            }
+
+            // initialization of JSONArray
+            JSONArray ar = ob.getJSONArray("result");
+            // The 0th index of the array contains the Data of first user.
+            // We are only interested in retrieving data of a single user.
+            ob = ar.getJSONObject(0) ;
+
+            if(ob.has("handle"))
+                this.handle = ob.getString("handle") ;
+            if(ob.has("firstName"))
+                firstName = ob.getString("firstName") ;
+            if(ob.has("lastName"))
+                lastName = ob.getString("lastName") ;
+            if(ob.has("rank"))
+                rank = ob.getString("rank") ;
+            if(ob.has("maxRank"))
+                maxRank = ob.getString("maxRank") ;
+
+            if(ob.has("rating"))
+                rating = ob.getInt("rating") ;
+            if(ob.has("maxRating"))
+                maxRating = ob.getInt("maxRating") ;
+
+            if(ob.has("contribution"))
+                contribution = ob.getInt("contribution") ;
+            if(ob.has("friendOfCount"))
+                friendOfCount = ob.getInt("friendOfCount") ;
+
+            if(ob.has("country"))
+                country = ob.getString("country") ;
+            if(ob.has("city"))
+                city = ob.getString("city") ;
+            if(ob.has("organization"))
+                organization = ob.getString("organization") ;
+
+            if(ob.has("titlePhoto"))
+                titlePhoto = ob.getString("titlePhoto") ;
+            if(ob.has("avatar"))
+                avatar = ob.getString("avatar") ;
         }catch(Exception e){
             throw new InitializationFailedException() ;
         }
         
-        // converting the content data into JSONObject
-        JSONObject ob = new JSONObject(content) ;
-        // The status of request... OK if successful.
-        String stat = ob.getString("status");
-        if(!stat.equals("OK")){  // something went wrong
-            throw new InitializationFailedException() ;
-        }
-        
-        // initialization of JSONArray
-        JSONArray ar = ob.getJSONArray("result");
-        // The 0th index of the array contains the Data of first user.
-        // We are only interested in retrieving data of a single user.
-        ob = ar.getJSONObject(0) ;
-        
-        if(ob.has("handle"))
-            this.handle = ob.getString("handle") ;
-        if(ob.has("firstName"))
-            firstName = ob.getString("firstName") ;
-        if(ob.has("lastName"))
-            lastName = ob.getString("lastName") ;
-        if(ob.has("rank"))
-            rank = ob.getString("rank") ;
-        if(ob.has("maxRank"))
-            maxRank = ob.getString("maxRank") ;
-        
-        if(ob.has("rating"))
-            rating = ob.getInt("rating") ;
-        if(ob.has("maxRating"))
-            maxRating = ob.getInt("maxRating") ;
-        
-        if(ob.has("contribution"))
-            contribution = ob.getInt("contribution") ;
-        if(ob.has("friendOfCount"))
-            friendOfCount = ob.getInt("friendOfCount") ;
-        
-        if(ob.has("country"))
-            country = ob.getString("country") ;
-        if(ob.has("city"))
-            city = ob.getString("city") ;
-        if(ob.has("organization"))
-            organization = ob.getString("organization") ;
-        
-        if(ob.has("titlePhoto"))
-            titlePhoto = ob.getString("titlePhoto") ;
-        if(ob.has("avatar"))
-            avatar = ob.getString("avatar") ;
     }
     
-    public CFUser(JSONObject ob){  // another constructor
+    public CFUser(JSONObject ob) throws InitializationFailedException{  // another constructor
         submissionsLoaded = false ; // initially submissions of a user is not loaded.
         ratingChangesLoaded = false; // initially rating changes of a user is not loaded.
         
-        if(ob.has("handle"))
-            this.handle = ob.getString("handle") ;
-        if(ob.has("firstName"))
-            firstName = ob.getString("firstName") ;
-        if(ob.has("lastName"))
-            lastName = ob.getString("lastName") ;
-        if(ob.has("rank"))
-            rank = ob.getString("rank") ;
-        if(ob.has("maxRank"))
-            maxRank = ob.getString("maxRank") ;
+        try{
         
-        if(ob.has("rating"))
-            rating = ob.getInt("rating") ;
-        if(ob.has("maxRating"))
-            maxRating = ob.getInt("maxRating") ;
-        
-        if(ob.has("contribution"))
-            contribution = ob.getInt("contribution") ;
-        if(ob.has("friendOfCount"))
-            friendOfCount = ob.getInt("friendOfCount") ;
-        
-        if(ob.has("country"))
-            country = ob.getString("country") ;
-        if(ob.has("city"))
-            city = ob.getString("city") ;
-        if(ob.has("organization"))
-            organization = ob.getString("organization") ;
-        
-        if(ob.has("titlePhoto"))
-            titlePhoto = ob.getString("titlePhoto") ;
-        if(ob.has("avatar"))
-            avatar = ob.getString("avatar") ;
+            if(ob.has("handle"))
+                this.handle = ob.getString("handle") ;
+            if(ob.has("firstName"))
+                firstName = ob.getString("firstName") ;
+            if(ob.has("lastName"))
+                lastName = ob.getString("lastName") ;
+            if(ob.has("rank"))
+                rank = ob.getString("rank") ;
+            if(ob.has("maxRank"))
+                maxRank = ob.getString("maxRank") ;
+
+            if(ob.has("rating"))
+                rating = ob.getInt("rating") ;
+            if(ob.has("maxRating"))
+                maxRating = ob.getInt("maxRating") ;
+
+            if(ob.has("contribution"))
+                contribution = ob.getInt("contribution") ;
+            if(ob.has("friendOfCount"))
+                friendOfCount = ob.getInt("friendOfCount") ;
+
+            if(ob.has("country"))
+                country = ob.getString("country") ;
+            if(ob.has("city"))
+                city = ob.getString("city") ;
+            if(ob.has("organization"))
+                organization = ob.getString("organization") ;
+
+            if(ob.has("titlePhoto"))
+                titlePhoto = ob.getString("titlePhoto") ;
+            if(ob.has("avatar"))
+                avatar = ob.getString("avatar") ;
+        }catch(Exception e){
+            throw new InitializationFailedException();
+        }
     }
     
     @Override
