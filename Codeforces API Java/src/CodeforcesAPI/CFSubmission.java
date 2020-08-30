@@ -13,26 +13,13 @@ import org.json.JSONObject;
  */
 
 public class CFSubmission {
-    public enum verdictType{ // enum for verdict type
-        FAILED, OK, PARTIAL, COMPILATION_ERROR,
-        RUNTIME_ERROR, WRONG_ANSWER, PRESENTATION_ERROR,
-        TIME_LIMIT_EXCEEDED, MEMORY_LIMIT_EXCEEDED,
-        IDLENESS_LIMIT_EXCEEDED, SECURITY_VIOLATED, CRASHED,
-        INPUT_PREPARATION_CRASHED, CHALLENGED, SKIPPED, TESTING, REJECTED
-    }
-
-    public enum testsetType{ // enum for testset type
-        SAMPLES, PRETESTS, TESTS, CHALLENGES,
-        TESTS1, TESTS2, TESTS3, TESTS4, TESTS5, TESTS6,
-        TESTS7, TESTS8, TESTS9, TESTS10
-    }
 
     private int id ;
     private long creationTimeSeconds, relativeTimeSeconds ;
     private CFProblem problem ;
     private String programmingLanguage ;
-    private verdictType verdict ;
-    private testsetType testset ;
+    private String verdict ;
+    private String testset ;
     private int passedTestCount, timeConsumedMillis, memoryConsumedBytes ;
     
     public CFSubmission(JSONObject ob){ // constructor
@@ -41,8 +28,8 @@ public class CFSubmission {
         relativeTimeSeconds = ob.getLong("relativeTimeSeconds") ;
         problem = new CFProblem(ob.getJSONObject("problem")) ;
         programmingLanguage = ob.getString("programmingLanguage");
-        verdict = ob.getEnum(verdictType.class, "verdict");
-        testset = ob.getEnum(testsetType.class, "testset");
+        verdict = ob.getString("verdict");
+        testset = ob.getString("testset");
         passedTestCount = ob.getInt("passedTestCount");
         timeConsumedMillis = ob.getInt("timeConsumedMillis");
         memoryConsumedBytes = ob.getInt("memoryConsumedBytes");
@@ -80,11 +67,19 @@ public class CFSubmission {
         return programmingLanguage;
     }
 
-    public verdictType getVerdict() {
+    public String getVerdict() {
+//        FAILED, OK, PARTIAL, COMPILATION_ERROR,
+//        RUNTIME_ERROR, WRONG_ANSWER, PRESENTATION_ERROR,
+//        TIME_LIMIT_EXCEEDED, MEMORY_LIMIT_EXCEEDED,
+//        IDLENESS_LIMIT_EXCEEDED, SECURITY_VIOLATED, CRASHED,
+//        INPUT_PREPARATION_CRASHED, CHALLENGED, SKIPPED, TESTING, REJECTED
         return verdict;
     }
 
-    public testsetType getTestset() {
+    public String getTestset() {
+//        SAMPLES, PRETESTS, TESTS, CHALLENGES,
+//        TESTS1, TESTS2, TESTS3, TESTS4, TESTS5, TESTS6,
+//        TESTS7, TESTS8, TESTS9, TESTS10
         return testset;
     }
 

@@ -14,20 +14,13 @@ import org.json.JSONObject;
 
 
 public class CFContest {
-    public enum contestType{ // scoring system
-        CF, IOI, ICPC
-    }
-
-    public enum contestPhase{
-        BEFORE, CODING, PENDING_SYSTEM_TEST, SYSTEM_TEST, FINISHED
-    }
     
     private int id ;
     private String name ;
     private long durationdurationSeconds, startTimeSeconds, relativeTimeSeconds ;
     private String preparedBy, websiteUrl;
-    private contestType type ;
-    private contestPhase phase ;
+    private String type ;
+    private String phase ;
     
     // constructor
     public CFContest(JSONObject ob){
@@ -44,8 +37,8 @@ public class CFContest {
         if(ob.has("websiteUrl"))
             preparedBy = ob.getString("websiteUrl") ;
         
-        type = ob.getEnum(contestType.class, "type") ;
-        phase = ob.getEnum(contestPhase.class, "phase") ;
+        type = ob.getString( "type") ;
+        phase = ob.getString("phase") ;
     }
 
     public int getId() {
@@ -76,12 +69,12 @@ public class CFContest {
         return websiteUrl;
     }
 
-    public contestType getType() {
-        return type;
+    public String getType() {
+        return type;//CF, IOI, ICPC
     }
 
-    public contestPhase getPhase() {
-        return phase;
+    public String getPhase() {
+        return phase;//BEFORE, CODING, PENDING_SYSTEM_TEST, SYSTEM_TEST, FINISHED
     }
     
     @Override

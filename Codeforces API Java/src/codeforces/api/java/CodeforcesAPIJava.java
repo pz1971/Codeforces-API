@@ -5,7 +5,6 @@
  */
 package codeforces.api.java;
 import CodeforcesAPI.* ;
-import CodeforcesAPI.CFContest.contestPhase;
 import javafx.util.Pair;
 
 /**
@@ -23,16 +22,16 @@ public class CodeforcesAPIJava {
 //        try{
 //            pz = new CFUser("pz1971") ;   
 //            System.out.println(pz.toString());
-////            System.out.println(pz.areSubmissionsLoaded());
-////            pz.loadSubmissions();
-////            System.out.println(pz.areSubmissionsLoaded());
-////            System.out.println(pz.getSubmissionCount());
-////            System.out.println(pz.getPassedCount());
-////            System.out.println(pz.getFailedCount());
-//            System.out.println(pz.areRatingChangesLoaded());
-//            pz.loadRatingChanges();
-//            System.out.println("participation = " + pz.getParticipationCount());
-//            System.out.println(pz.getRatingChanges()[1].toString());
+//            System.out.println(pz.areSubmissionsLoaded());
+//            pz.loadSubmissions();
+//            System.out.println(pz.areSubmissionsLoaded());
+//            System.out.println(pz.getSubmissionCount());
+//            System.out.println(pz.getPassedCount());
+//            System.out.println(pz.getFailedCount());
+////            System.out.println(pz.areRatingChangesLoaded());
+////            pz.loadRatingChanges();
+////            System.out.println("participation = " + pz.getParticipationCount());
+////            System.out.println(pz.getRatingChanges()[1].toString());
 //        }catch(InitializationFailedException e){
 //            e.printStackTrace();
 //        }
@@ -44,13 +43,13 @@ public class CodeforcesAPIJava {
 //        }catch(InitializationFailedException e){
 //            e.printStackTrace();
 //        }
-
+//
 //        try{
 //            Codeforces cf = new Codeforces() ;
 //            CFContest ar[] = cf.getContestList() ;
 //            
 //            for(int i = 0 ; i < 10 ; i++){
-////                if(ar[i].getPhase() == contestPhase.BEFORE)
+//                if(ar[i].getPhase().equals( "BEFORE"))
 //                    System.out.println(ar[i].toString());
 //            }
 //            

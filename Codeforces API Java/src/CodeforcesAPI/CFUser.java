@@ -5,8 +5,6 @@
  */
 package CodeforcesAPI;
 
-import CodeforcesAPI.CFSubmission.verdictType;
-import CodeforcesAPI.CFSubmission.testsetType;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -175,7 +173,7 @@ public class CFUser {
             // converting JSON objects into CFSubmission objects
             for(int i = 0 ; i < ar.length() ; i++){
                 submissions[i] = new CFSubmission( ar.getJSONObject(i) ) ;
-                if(submissions[i].getVerdict() == verdictType.OK)
+                if(submissions[i].getVerdict().equals("OK"))
                     passedCount++ ;
                 else
                     failedCount++ ;
