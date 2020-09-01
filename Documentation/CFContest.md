@@ -14,13 +14,6 @@
 | `long` | `getRelativeTimeSeconds()` | Returns relative start time of the contest |
 | `String` | `getPreparedBy()` | Returns handle of the user who created the contest |
 | `String` | `getWebsiteUrl()` | Link the contest |
-| `contestType` | `getType()` | Type of the contest. <br> Go through the enum contestType for the possible types |
-| `contestPhase` | `getType()` | Phase of the contest. <br> Go through the enum contestPhase for the possible Phases |
+| `String` | `getType()` | Type of the contest. <br> **Possible Types are:** "CF", "IOI", "ICPC"|
+| `String` | `getType()` | Phase of the contest. <br> **Possible Phases are:** "BEFORE", "CODING", "PENDING_SYSTEM_TEST", "SYSTEM_TEST", "FINISHED"|
 | `String` | `toString()` | Returns name of the contest |
-
-<br>
-
-| Enum | Keys |
-| :---: |:---:|
-| contestType | CF, IOI, ICPC |
-| contestPhase | BEFORE, CODING, PENDING_SYSTEM_TEST, SYSTEM_TEST, FINISHED |
